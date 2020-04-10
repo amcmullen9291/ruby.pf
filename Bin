@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require_relative 'GEMFILE'
+require_relative 'commentary.rb'
+require_relative 'clinteraction.rb'
+require_relative 'scraper.rb'
+require_relative 'stadium.rb'
+
