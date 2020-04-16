@@ -1,8 +1,58 @@
 #!/usr/bin/env ruby
 
-require_relative 'GEMFILE'
-require_relative 'commentary.rb'
-require_relative 'clinteraction.rb'
-require_relative 'scraper.rb'
-require_relative 'stadium.rb'
 
+require GEMFILE
+# require_relative "commentary.rb"
+require_relative "clinteraction.rb"
+require_relative "scraper.rb"
+# require_relative "stadium.rb"
+
+
+Interaction.welcome
+
+def welcome
+    @welcome = welcome
+    puts ""
+    puts ""
+    puts "#{'Welcome to FootBall Central!'.blue}".rjust(3)
+    puts ""
+    puts "For a list of all Stadiums type 'list'".red
+    puts "For stadiums ranked by their size, type 'size'"
+    puts "To see stadiums ranked by their opening year, type 'year'"
+    puts "To select a stadium by team name, type 'teams'"
+    puts ""
+    puts "To search by the stadium name type 'stadium'"
+    puts "type 'stop' to exit"
+    response = gets.downcase.chomp
+
+    if response == "list"
+        @stadiums
+    elsif response == "size"
+        @size_ranking
+    elsif response == "year"
+        @year_ranking
+    elsif response == "teams"
+        @teams
+    elsif response == "stadium"
+        @stadium_name
+    elsif response == "stop"
+        exit[0]
+    else
+        puts "Please try again."
+        response = gets.chomp
+        timeout = 1
+        if response != "size" && response != "year" && response != "team" &&response != "stadium" && response != "list"
+            3.times do
+            puts " Invalid response. Please try again."
+            response = gets.chomp
+            timeout +=1
+                if timeout == 4
+                    puts "goodbye"
+                    exit[0]
+                end
+            end
+        else
+            @continue
+        end
+    end
+end
