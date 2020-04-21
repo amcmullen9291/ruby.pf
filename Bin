@@ -1,17 +1,13 @@
 #!/usr/bin/env ruby
+chmod +x clinteraction.rb
 
 
 require GEMFILE
 # require_relative "commentary.rb"
-require_relative "clinteraction.rb"
-require_relative "scraper.rb"
-# require_relative "stadium.rb"
+require_relative 'clinteraction.rb'
+require_relative 'scraper.rb'
 
 
-Interaction.welcome
-
-def welcome
-    @welcome = welcome
     puts ""
     puts ""
     puts "#{'Welcome to FootBall Central!'.blue}".rjust(3)
@@ -23,7 +19,7 @@ def welcome
     puts ""
     puts "To search by the stadium name type 'stadium'"
     puts "type 'stop' to exit"
-    response = gets.downcase.chomp
+    response = gets.chomp
 
     if response == "list"
         @stadiums
@@ -40,19 +36,17 @@ def welcome
     else
         puts "Please try again."
         response = gets.chomp
-        timeout = 1
-        if response != "size" && response != "year" && response != "team" &&response != "stadium" && response != "list"
-            3.times do
-            puts " Invalid response. Please try again."
-            response = gets.chomp
-            timeout +=1
-                if timeout == 4
-                    puts "goodbye"
-                    exit[0]
-                end
-            end
-        else
-            @continue
-        end
+        # timeout = 1
+        # if response != "size" && response != "year" && response != "team" &&response != "stadium" && response != "list"
+        #     3.times do
+        #     puts " Invalid response. Please try again."
+        #     response = gets.chomp
+        #     timeout +=1
+        #         if timeout == 4
+        #             puts "goodbye"
+        #             exit[0]
+        #         end
+        #     end
+        # end
     end
-end
+# end
