@@ -10,7 +10,7 @@ class Scraper
 @@all = []
 @@locate = []
 @@comments = []
-@@translate = [["Alabama", "AL"], ["Alaska", "AK"], ["Arizona", "AZ"], ["Arkansas", "AR"], ["California", "CA"], ["Colorado", "CO"], ["Connecticut", "CT"], ["Delaware", "DE"], ["Florida", "FL"], ["Georgia", "GA"], ["Hawaii", "HI"], ["Idaho", "ID"], ["Illinois", "IL"], ["Indiana", "IN"], ["Iowa", "IA"], ["Kansas", "KS"], ["Kentucky", "KY"], ["Louisiana", "LA"], ["Maine", "ME"], ["Maryland", "MD"], ["Massachusetts", "MA"], ["Michigan", "MI"], ["Minnesota", "MN"], ["Mississippi", "MS"], ["Missouri", "MO"], ["Montana", "MT"], ["Nebraska", "NE"], ["Nevada",  "NV"], ["New Hampshire", "NH"], ["New Jersey", "NJ"], ["New Mexico", "NM"], ["New York", "NY"], ["North Carolina", "NC"], ["North Dakota", "ND"], ["Ohio", "OH"], ["Oklahoma", "OK"], ["Oregon", "OR"], ["Pennsylvania", "PA"], ["Rhode Island", "RI"], ["South Carolina", "SC"], ["South Dakota", "SD"], ["Tennessee", "TN"], ["Texas", "TX"], ["Utah", "UT"], ["Vermont", "VT"], ["Virginia", "VA"], ["Washington", "WA"], ["West Virginia", "WV"], ["Wisconsin", "WI"],["District of Columbia" , "DC"], ["Wyoming" , "WY"], ["Puerto Rico" , "PR"], ["Virgin Islands" , "VI"]]
+@@translate = [["Alabama", "AL"], ["Alaska", "AK"], ["Arizona", "AZ"], ["Arkansas", "AR"], ["California", "CA"], ["Colorado", "CO"], ["Connecticut", "CT"], ["Delaware", "DE"], ["Florida", "FL"], ["Georgia", "GA"], ["Hawaii", "HI"], ["Idaho", "ID"], ["Illinois", "IL"], ["Indiana", "IN"], ["Iowa", "IA"], ["Kansas", "KS"], ["Kentucky", "KY"], ["Louisiana", "LA"], ["Maine", "ME"], ["Maryland", "MD"], ["Massachusetts", "MA"], ["Michigan", "MI"], ["Minnesota", "MN"], ["Mississippi", "MS"], ["Missouri", "MO"], ["Montana", "MT"], ["Nebraska", "NE"], ["Nevada",  "NV"], ["New Hampshire", "NH"], ["New Jersey", "NJ"], ["New Mexico", "NM"], ["New York", "NY"], ["North Carolina", "NC"], ["North Dakota", "ND"], ["Ohio", "OH"], ["Oklahoma", "OK"], ["Oregon", "OR"], ["Pennsylvania", "PA"], ["Rhode Island", "RI"], ["South Carolina", "SC"], ["South Dakota", "SD"], ["Tennessee", "TN"], ["Texas", "TX"], ["Utah", "UT"], ["Vermont", "VT"], ["Virginia", "VA"], ["Washington", "WA"], ["West Virginia", "WV"], ["Wisconsin", "WI"],["District of Columbia" , "DC"], ["Wyoming", "WY"], ["Puerto Rico", "PR"], ["Virgin Islands", "VI"]]
 
     def initialize(stadium_name=nil, capacity=nil, location=nil, surface=nil, teams=nil, year_opened=nil)
         @stadium_name = stadium_name
@@ -19,13 +19,10 @@ class Scraper
         @location = location
         @teams = teams
         @year_opened = year_opened
-        @prefix = prefix
-        @abbr = abbr
-        @area = area
         @@all << self
     end
 
-    def all
+    def self.all
         @@all
     end
 
@@ -40,6 +37,7 @@ class Scraper
         scraped_opinion = Nokogiri::HTML(opinions_page)
         stadium_query = URI.open(url2)
         stadium_info = Nokogiri::HTML(stadium_query)
+
         stadium_name = stadium_info.css('#mw-content-text > div > table:nth-child(19) > tbody > tr:nth-child(n+1) > th > a').text
  #Proper names; Variable inputs
             stadium_name = stadium_name.gsub("MetLife","Metlife ")
@@ -71,7 +69,7 @@ class Scraper
     y = 0
             while y < total.count do
                 total[y]
-                located = total[y].children.text.split("\n")
+                located = total[y].children.text.split("\n") #("", prefix, state, metro, area)
                 @@locate << located
                 y+=1
             end
@@ -88,7 +86,16 @@ class Scraper
             @@comments << commentary
             end
 
-        binding.pry
+            def self.locate
+                @@locate
+            end
+            def self.comments
+                @@comments
+            end
+            def self.translate
+                @@translate
+            end
+
+        # binding.pry
 
 end
-
