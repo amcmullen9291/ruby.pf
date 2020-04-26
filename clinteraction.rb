@@ -17,7 +17,7 @@ require_relative 'scraper'
 # puts "                                                             "
 # puts "            ** For a list of stadiums ranked by their size, type #{'size'.red}"
 # puts  "           **To see stadiums ranked by their opening year, type #{'year'.red}"
-# puts "            **To select a stadium by team name, type #{'teams'.red}"
+# puts "            **To select a stadium by name, type #{'stadium'.red}"
 # puts "#{'.................................................................'.green}"
 # puts "                                                   "
 # puts "                  OR                                                  "
@@ -29,6 +29,7 @@ require_relative 'scraper'
 
 
 def list
+    print "\e[8;40;60t"
     x = 0
     y = 1
     puts""
@@ -37,8 +38,10 @@ def list
         puts "#{i}: " "#{name.stadium_name}"
         puts ""
         end
-        puts "#{x+5} out of " "#{Scraper.all.length} stadiums".red
-        puts "Select a Stadium by number, or press enter to continue".light_blue
+        print "#{x+5} out of " "#{Scraper.all.length} stadiums. \r".red
+        sleep(2)
+        print "Select a Stadium by number, or press enter to continue. \r".light_blu
+        puts ""
         response = gets.chomp
         if response == "\n"
         end
@@ -48,6 +51,7 @@ def list
 end
 
 def teams
+    print "\e[8;40;60t"
     x = 0
     y = 1
     puts""
@@ -69,6 +73,7 @@ end
 
 
 def year_opened_oldest
+    print "\e[8;40;60t"
     years = Scraper.all.sort_by{|obj| obj.year_opened}
     x = 0
     y = 1
@@ -78,10 +83,11 @@ def year_opened_oldest
         print "#{i}: " "#{name.stadium_name} was built in: " "#{name.year_opened}     "
         puts "\n\n"
         end
-        prints "#{x+5} out of " "#{years.length}".red
+        prints "#{x+5} out of " "#{years.length}. \r".red
         sleep(2)
         print "\r"
-        print "Select a Stadium by number, or press enter to continue".light_blue
+        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        puts ""
         response = gets.chomp
         if response == "\r"
         end
@@ -91,6 +97,7 @@ def year_opened_oldest
 end
 
 def year_opened_newest
+    print "\e[8;40;60t"
     years = Scraper.all.sort_by{|obj| obj.year_opened}.reverse
     x = 0
     y = 1
@@ -104,7 +111,8 @@ def year_opened_newest
         print "#{x+5} out of " "#{years.length}".red
         sleep(2)
         print "\r"
-        print "Select a Stadium by number, or press enter to continue".light_blue
+        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        puts ""
         response = gets.chomp
         if response == "\n"
             print"\r"
@@ -115,6 +123,7 @@ def year_opened_newest
 end
 
 def capacity_SmallToBig
+    print "\e[8;40;60t"
     size = Scraper.all.sort_by{|obj| obj.capacity}
     x = 0
     y = 1
@@ -127,7 +136,8 @@ def capacity_SmallToBig
         print "#{x+5} out of " "#{size.length} ".red
         sleep(2)
         print"\r"
-        print "Select a Stadium by number, or press enter to continue \r".light_blue
+        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        puts ""
         response = gets.chomp
         if response == "\r"
         end
@@ -137,6 +147,7 @@ def capacity_SmallToBig
 end
 
 def capacity_BigToSmall
+    print "\e[8;40;60t"
     size = Scraper.all.sort_by{|obj| obj.capacity}.reverse
     x = 0
     y = 1
@@ -149,7 +160,8 @@ def capacity_BigToSmall
         print "#{x+5} out of " "#{size.length}".red
         sleep(2)
         print "\r"
-        print "Select a Stadium by number, or press enter to continue".light_blue
+        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        puts ""
         response = gets.chomp
         if response == "\n"
             print"\r"
@@ -159,5 +171,67 @@ def capacity_BigToSmall
     end
 end
 
+def stadium_info
+    puts "Enter a stadium name."
+    stadium = gets.chomp.downcase
+    home = []
+    puts "\n\n"
+    print "\e[8;40;60t"
+    Scraper.all.select do |team| if team.stadium_name.downcase.include?("#{stadium}")
+        puts team.stadium_name.yellow
+        puts "was opened in " "#{team.year_opened}" " in ""#{team.location}"" as"
+        puts "home to the ""#{team.teams.yellow}."
+        puts "The field's surface is ""#{team.surface}, and "
+        puts "it can seat up to ""#{team.capacity.blue}" " people."
+        puts "\n"
+        home = team.stadium_name
+        home.to_s
+        Scraper.comments.select do |team| if team[0].include?("#{home}")
+            puts team[1]
+            puts "\n"
+            end
+        end
+    end
+    end
     # binding.pry
- teams
+    puts"\n\n"
+    2.times do
+    print "                   "
+    sleep(1)
+    print "       #{'FOOTBALL'.blue.on_red.blink}                  \r"
+    sleep(1)
+    print "                   "
+    sleep(1)
+    print "          #{'CENTRAL'.blue.on_red.uncolorize}                \r"
+    sleep(1)
+    print "                   "
+    sleep(1)
+    print "       #{'FOOTBALL'.blue.on_red.uncolorize}                  \r"
+    sleep(1)
+    print "                   "
+    sleep(1)
+    print "          #{'CENTRAL'.blue.on_red.blink}                     \r"
+    sleep(1)
+    end
+    print "FOOTBALL CENTRAL \r"
+    sleep(1)
+    home = []
+    puts "what would you like to do next?               " ##"3,2,1, hike! (return home?)plus allow enter to exit program "
+end
+
+def zipCode
+    print "\e[8;40;90t"
+    puts ""
+    puts "Enter a zip zode"
+    code = gets.chomp
+    Scraper.locate.select do |neighborhood|
+        if "#{code}".start_with?("#{neighborhood[1]}")
+        puts " #{'Metro Area found:'.yellow} #{neighborhood[3]}" " (#{neighborhood[4]})."
+        stateAbbr = neighborhood[2]
+## need to match stateAbbr w/ Scraper.translate array
+    end
+end
+end
+
+    # binding.pry
+zipCode
