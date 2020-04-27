@@ -19,7 +19,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  catpix_mini
   colorize
+  madison
   nokogiri
   open_uri_redirections
   pry
