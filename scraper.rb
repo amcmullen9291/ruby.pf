@@ -57,23 +57,22 @@ class Scraper
             teams = teams.split /(?<=[a-z])(?=[A-Z])/
         year_opened = stadium_info.css('#mw-content-text > div > table:nth-child(19) > tbody > tr:nth-child(n+1) > td:nth-child(8)').text.chomp("\n").split("\n")
     x = 0
-            while x < stadium_name.length do
-                stadium = [stadium_name[x], capacity[x], location[x], surface[x], teams[x], year_opened[x]]
-                stadium = Scraper.new(stadium_name[x], capacity[x], location[x], surface[x], teams[x], year_opened[x])
-                 x+=1
-                end
-##commentary data
-
-        total = zip.css('#mw-content-text > div > table:nth-child(n+1) > tbody > tr:nth-child(n+1)').drop(6)
-
-    y = 0
-            while y < total.count do
-                total[y]
-                located = total[y].children.text.split("\n") #("", prefix, state, metro, area)
-                @@locate << located
-                y+=1
+        while x < stadium_name.length do
+            stadium = [stadium_name[x], capacity[x], location[x], surface[x], teams[x], year_opened[x]]
+            stadium = Scraper.new(stadium_name[x], capacity[x], location[x], surface[x], teams[x], year_opened[x])
+             x+=1
             end
-            # binding.pry
+
+##commentary data
+        total = zip.css('#mw-content-text > div > table:nth-child(n+1) > tbody > tr:nth-child(n+1)').drop(6)
+    y = 0
+        while y < total.count do
+            total[y]
+            located = total[y].children.text.split("\n") #("", prefix, state, metro, area)
+            @@locate << located
+            y+=1
+        end
+
     pg = 0
         named_stadium = scraped_opinion.css('figure > div.section-label.alt-font > span.title').text.split(/(?<=[)])/)
         comment = scraped_opinion.css('div > div > p:nth-child(2)').text
@@ -95,7 +94,4 @@ class Scraper
             def self.translate
                 @@translate
             end
-
-        # binding.pry
-
 end

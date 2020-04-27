@@ -3,9 +3,10 @@ require 'pry'
 require_relative 'scraper'
 
 # ------------------------------------------------------------------------------
+
 puts "      ||                                           ||"
 puts "      ||                                           ||"
-puts "       #{'FootBall Central!'.blue}         "
+puts "                  #{'FootBall Central!'.blue}         "
 puts "      ||###########################################||"
 puts "                           ##                                 "
 puts "  For a list of all Stadiums type #{'list'.red}"
@@ -84,7 +85,7 @@ def list
         x+=5
         y+=5
     end
-    puts "Enter 'home' to continue"
+    puts "Enter 'home' to go back."
     home_bound = gets.chomp
         if home_bound == "home"
             reFresh
@@ -139,7 +140,7 @@ def year_opened_oldest
         x+=5
         y+=5
     end
-    puts "Enter 'home' to continue"
+    puts "Enter 'home' to go back."
     home_bound = gets.chomp
         if home_bound == "home"
             reFresh
@@ -170,7 +171,7 @@ def year_opened_newest
         x+=5
         y+=5
     end
-    puts "Enter 'home' to continue"
+    puts "Enter 'home' to go back."
     home_bound = gets.chomp
         if home_bound == "home"
             reFresh
@@ -254,6 +255,7 @@ def stadium_info
         homes = team.stadium_name
         homes.to_s
         Scraper.comments.select do |team| if team[0].include?("#{homes}")
+            print "In other words: ".light_black
             puts team[1]
             puts "\n"
             end
@@ -265,19 +267,19 @@ def stadium_info
     2.times do
     print "                   "
     sleep(1)
-    print "       #{'FOOTBALL'.blue.on_red.blink}                  \r"
+    print " #{'FOOTBALL'.blue.on_red.blink}                  \r"
     sleep(1)
     print "                   "
     sleep(1)
-    print "          #{'CENTRAL'.blue.on_red.uncolorize}                \r"
+    print "   #{'CENTRAL'.blue.on_red.uncolorize}                \r"
     sleep(1)
     print "                   "
     sleep(1)
-    print "       #{'FOOTBALL'.blue.on_red.uncolorize}                  \r"
+    print "   #{'FOOTBALL'.blue.on_red.uncolorize}                  \r"
     sleep(1)
     print "                   "
     sleep(1)
-    print "          #{'CENTRAL'.blue.on_red.blink}                     \r"
+    print "       #{'CENTRAL'.blue.on_red.blink}                     \r"
     sleep(1)
     end
     print "                                                              "
@@ -313,6 +315,7 @@ def zip_code
             home = ballpark.stadium_name
             home.to_s
             Scraper.comments.select do |team| if team[0].include?("#{home}")
+                print "In other words: ".light_black
                 puts team[1]
                 puts "\n"
             end
@@ -355,5 +358,3 @@ elsif response == "zip"
 else
     teams
 end
-
-    # binding.pry
