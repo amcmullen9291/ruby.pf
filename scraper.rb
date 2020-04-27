@@ -77,6 +77,8 @@ class Scraper
         named_stadium = scraped_opinion.css('figure > div.section-label.alt-font > span.title').text.split(/(?<=[)])/)
         comment = scraped_opinion.css('div > div > p:nth-child(2)').text
         comment = comment.gsub("quaint.\"The Grand Old Lady\"", "quaint.The Grand Old Lady") #more poor grammer structure
+        comment = comment.gsub("moved from “The Jungle.”\"The New Sombrero\"h", "moved from The Jungle.The New Sombrero h")
+        comment = comment.gsub("51was a second-time host for a reason.It’s a solidall-around facility, ev", "51was a second-time host for a reason. It’s a solidall-around facility, ev")
         comment = comment.split(/(?<=[[:lower:]]['.'])(?=[A-Z])|(?<=[[:digit:]]['.'])(?=[A-Z])/)
 
         while pg < named_stadium.length do
@@ -84,6 +86,7 @@ class Scraper
             pg+=1
             @@comments << commentary
             end
+            # binding.pry
 
             def self.locate
                 @@locate

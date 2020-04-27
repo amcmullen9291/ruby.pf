@@ -104,7 +104,6 @@ def teams
         choice = colors[hh]
         color = "#{choice}"
         puts "#{i}: " "#{name.teams}".colorize(:"#{color}")
-        # binding.pry
         puts ""
         sleep(0.5)
         end
@@ -262,7 +261,6 @@ def stadium_info
         end
     end
     end
-    # binding.pry
     puts"\n\n"
     2.times do
     print "                   "
