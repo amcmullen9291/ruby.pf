@@ -3,14 +3,13 @@ chmod +x clinteraction.rb
 
 
 require GEMFILE
-# require_relative "commentary.rb"
 require_relative 'clinteraction.rb'
 require_relative 'scraper.rb'
 
 
     puts ""
     puts ""
-    puts "#{'Welcome to FootBall Central!'.blue}".rjust(3)
+    puts "#{'FootBall Central!'.blue}"
     puts ""
     puts "For a list of all Stadiums type 'list'".red
     puts "For stadiums ranked by their size, type 'size'"
@@ -21,32 +20,4 @@ require_relative 'scraper.rb'
     puts "type 'stop' to exit"
     response = gets.chomp
 
-    if response == "list"
-        @stadiums
-    elsif response == "size"
-        @size_ranking
-    elsif response == "year"
-        @year_ranking
-    elsif response == "teams"
-        @teams
-    elsif response == "stadium"
-        @stadium_name
-    elsif response == "stop"
-        exit[0]
-    else
-        puts "Please try again."
-        response = gets.chomp
-        # timeout = 1
-        # if response != "size" && response != "year" && response != "team" &&response != "stadium" && response != "list"
-        #     3.times do
-        #     puts " Invalid response. Please try again."
-        #     response = gets.chomp
-        #     timeout +=1
-        #         if timeout == 4
-        #             puts "goodbye"
-        #             exit[0]
-        #         end
-        #     end
-        # end
-    end
-# end
+    
