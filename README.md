@@ -13,5 +13,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 End license text.
 
-Gems used: Nokogiri, Open-Uri, and Colorize. 
-(launch program from clinteraction.rb)
+Gems used: Nokogiri, Open-Uri, and Colorize 
+(launch program from clinteraction.rb).
