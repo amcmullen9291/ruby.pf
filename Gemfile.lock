@@ -1,18 +1,10 @@
 GEM
   specs:
-    catpix_mini (0.1.1)
-      docopt (~> 0.5, >= 0.5.0)
-      mini_magick (~> 4.7.0, >= 4.7.0)
-      ruby-terminfo (~> 0.1, >= 0.1.1)
-      tco (~> 0.1, >= 0.1.8)
     coderay (1.1.2)
     colorize (0.8.1)
     docopt (0.6.1)
     json (2.1.0)
-    madison (0.5.0)
-      json
     method_source (1.0.0)
-    mini_magick (4.7.2)
     mini_portile2 (2.4.0)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -27,9 +19,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  catpix_mini
   colorize
-  madison
   nokogiri
   open_uri_redirections
   pry
