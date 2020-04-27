@@ -12,11 +12,11 @@ puts "                           ##                                 "
 puts "  For a list of all Stadiums type #{'list'.red}"
 puts "                                                             "
 puts "            ** For a list of stadiums ranked by their size, type #{'size'.red}"
-puts  "           **To see stadiums ranked by their opening year, type #{'year'.red}"
-puts "            **To select a stadium by name, type #{'stadium'.red}"
+puts  "           ** To see stadiums ranked by their opening year, type #{'year'.red}"
 puts "#{'............................................................'.green}"
 puts "                                                   "
 puts "                  OR                                                  "
+puts "    **To select a stadium by name, type #{'stadium'.red}"
 puts "Type #{'zip'.yellow} to see Stadiums around you!"
 puts "                                                                 "
 puts "                                                                   "
@@ -25,15 +25,15 @@ response = gets.chomp
 
 def reFresh
     puts "\n\n\n\n"
-    puts "  For a list of all Stadiums type #{'list'.red}"
+    puts "  For a list of all stadiums type #{'list'.red}"
     puts "                                                             "
     puts "            ** For a list of stadiums ranked by their size, type #{'size'.red}"
-    puts  "           **To see stadiums ranked by their opening year, type #{'year'.red}"
-    puts "            **To select a stadium by name, type #{'stadium'.red}"
+    puts  "           ** To see stadiums ranked by their opening year, type #{'year'.red}"
     puts "#{'............................................................'.green}"
     puts "                                                   "
     puts "                  OR                                                  "
-    puts "Type #{'zip'.yellow} to see Stadiums around you!"
+    puts "    **To select a stadium by name, type #{'stadium'.red}."
+    puts "Type #{'zip'.yellow} to see stadiums around you!"
     puts "                                                                 "
     puts "                                                                   "
     puts "type #{'stop'.light_red} to exit                                   "
@@ -77,7 +77,7 @@ def list
         end
         print "#{x+5} out of " "#{Scraper.all.length} stadiums. \r".red
         sleep(2)
-        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        print "Press enter to continue. \r".light_blue
         puts ""
         response = gets.chomp
         if response == "\n"
@@ -131,7 +131,7 @@ def year_opened_oldest
         print "#{x+5} out of " "#{years.length}. \r".red
         sleep(2)
         print "\r"
-        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        print "Press enter to continue. \r".light_blue
         puts ""
         response = gets.chomp
         if response == "\r"
@@ -161,7 +161,7 @@ def year_opened_newest
         print "#{x+5} out of " "#{years.length}".red
         sleep(2)
         print "\r"
-        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        print "Press enter to continue. \r".light_blue
         puts ""
         response = gets.chomp
         if response == "\n"
@@ -191,7 +191,7 @@ def capacity_SmallToBig
         print "#{x+5} out of " "#{size.length} ".red
         sleep(2)
         print"\r"
-        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        print "Press enter to continue. \r".light_blue
         puts ""
         response = gets.chomp
         if response == "\r"
@@ -220,26 +220,23 @@ def capacity_BigToSmall
         print "#{x+5} out of " "#{size.length}".red
         sleep(2)
         print "\r"
-        print "Select a Stadium by number, or press enter to continue. \r".light_blue
+        print "Press enter to continue. \r".light_blue
         puts ""
         response = gets.chomp
         if response == "\n"
-            5.times do
-            print "\r"
-            end
         end
         x+=5
         y+=5
+    end
     puts "Enter 'home' to go back."
     home_bound = gets.chomp
         if home_bound == "home"
             reFresh
         end
-    end
 end
 
 def stadium_info
-    puts "Enter a stadium name."
+    puts "Enter a stadium name.".light_red
     stadium = gets.chomp.downcase
     home_team = []
     puts "\n\n"
@@ -283,7 +280,7 @@ def stadium_info
     print "                                                              "
     sleep(1)
     home_team = []
-    puts "Enter 'home' to continue."
+    puts "Enter 'home' to go back."
     home_bound = gets.chomp
     if home_bound == "home"
         reFresh
@@ -324,7 +321,7 @@ def zip_code
         end
     end
     end
-    puts "Enter 'home' to continue."
+    puts "Enter 'home' to go back."
     home_bound = gets.chomp
     if home_bound == "home"
         reFresh
