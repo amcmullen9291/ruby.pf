@@ -3,7 +3,7 @@ require 'pry'
 require_relative 'scraper'
 
 # ------------------------------------------------------------------------------
-
+print "\e[8;40;60t"
 puts "      ||                                           ||"
 puts "      ||                                           ||"
 puts "                  #{'FootBall Central!'.blue}         "
@@ -16,8 +16,8 @@ puts  "           ** To see stadiums ranked by their opening year, type #{'year'
 puts "#{'............................................................'.green}"
 puts "                                                   "
 puts "                  OR                                                  "
-puts "    **To select a stadium by name, type #{'stadium'.red}"
-puts "Type #{'zip'.yellow} to see Stadiums around you!"
+puts "   "
+puts "           to see stadiums around you, start by typing #{'zip'.yellow}!"
 puts "                                                                 "
 puts "                                                                   "
 puts "type #{'stop'.light_red} to exit                                   "
@@ -30,10 +30,9 @@ def reFresh
     puts "            ** For a list of stadiums ranked by their size, type #{'size'.red}"
     puts  "           ** To see stadiums ranked by their opening year, type #{'year'.red}"
     puts "#{'............................................................'.green}"
-    puts "                                                   "
+    puts "                                                                  "
     puts "                  OR                                                  "
-    puts "    **To select a stadium by name, type #{'stadium'.red}."
-    puts "Type #{'zip'.yellow} to see stadiums around you!"
+    puts "           to see stadiums around you, start by typing #{'zip'.yellow}!"
     puts "                                                                 "
     puts "                                                                   "
     puts "type #{'stop'.light_red} to exit                                   "
@@ -41,23 +40,9 @@ def reFresh
         if response == "list"
             list
         elsif response == "size"
-            puts " enter '1' for stadiums biggest to smallest stadiums, or '2' for smaller stadiums first."
-            answer = gets.chomp
-            if answer == "1"
-                capacity_BigToSmall
-            elsif answer == "2"
-                capacity_SmallToBig
-            end
+                capacity
         elsif response =="year"
-            puts " enter '1' for newest stadiums first, or '2' to start with the oldest stadiums."
-            answer = gets.chomp
-            if answer == "1"
-                year_opened_newest
-            elsif answer == "2"
-                year_opened_oldest
-            end
-        elsif response == "stadium"
-            stadium_info
+                year_opened
         elsif response == "zip"
             zip_code
         else
@@ -65,27 +50,28 @@ def reFresh
         end
     end
 
-def list
-    print "\e[8;40;60t"
-    x = 0
-    y = 1
-    puts""
-    while x < Scraper.all.length
-    Scraper.all[x..x+4].each.with_index(y) do |name, i|
-        puts "#{i}: " "#{name.stadium_name}"
-        puts ""
+    def list
+        print "\e[8;40;60t"
+        x = 0
+        y = 1
+        puts""
+        while x < Scraper.all.length
+        Scraper.all[x..x+15].each.with_index(y) do |name, i|
+            puts "#{i}: " "#{name.stadium_name}"
+            puts ""
+            end
+            print "#{x+15} out of " "#{Scraper.all.length} stadiums. \r".red
+            sleep(2)
+            print "Press enter to continue. \r".light_blue
+            response = gets.chomp
+            if response == "\n"
+            end
+            x += 15
+            y += 15
+            # print "                                                "
         end
-        print "#{x+5} out of " "#{Scraper.all.length} stadiums. \r".red
-        sleep(2)
-        print "Press enter to continue. \r".light_blue
         puts ""
-        response = gets.chomp
-        if response == "\n"
-        end
-        x+=5
-        y+=5
-    end
-    puts "Enter 'home' to go back."
+        puts "Enter 'home'."
     home_bound = gets.chomp
         if home_bound == "home"
             reFresh
@@ -117,38 +103,15 @@ def teams
     exit()
 end
 
-def year_opened_oldest
+def year_opened
+    puts "Enter '1' for the oldest stadiums first, or '2' to start with the newer stadiums."
+    answer = gets.chomp
     print "\e[8;40;60t"
-    years = Scraper.all.sort_by{|obj| obj.year_opened}
-    x = 0
-    y = 1
-    puts""
-    while x < years.length
-    years[x..x+4].each.with_index(y) do |name, i|
-        print "#{i}: " "#{name.stadium_name} was built in: " "#{name.year_opened}     "
-        puts "\n\n"
-        end
-        print "#{x+5} out of " "#{years.length}. \r".red
-        sleep(2)
-        print "\r"
-        print "Press enter to continue. \r".light_blue
-        puts ""
-        response = gets.chomp
-        if response == "\r"
-        end
-        x+=5
-        y+=5
+    if answer == "1"
+        years = Scraper.all.sort_by{|obj| obj.year_opened}
+    elsif answer == "2"
+        years = Scraper.all.sort_by{|obj| obj.year_opened}.reverse
     end
-    puts "Enter 'home' to go back."
-    home_bound = gets.chomp
-        if home_bound == "home"
-            reFresh
-        end
-end
-
-def year_opened_newest
-    print "\e[8;40;60t"
-    years = Scraper.all.sort_by{|obj| obj.year_opened}.reverse
     x = 0
     y = 1
     puts""
@@ -161,14 +124,40 @@ def year_opened_newest
         print "#{x+5} out of " "#{years.length}".red
         sleep(2)
         print "\r"
-        print "Press enter to continue. \r".light_blue
-        puts ""
-        response = gets.chomp
-        if response == "\n"
-            print"\r"
-        end
         x+=5
         y+=5
+        puts "Choose a stadium by number, or press enter to continue. \r".light_blue
+        response = gets.chomp
+        response = response.to_i
+        if response != 0 && response != nil
+            team = years[response-1]
+            # binding.pry
+                puts team.stadium_name.yellow
+                puts "was opened in " "#{team.year_opened}" " in ""#{team.location}"" as"
+                puts "home to the ""#{team.teams.yellow}."
+                puts "The field's surface is ""#{team.surface}, and "
+                puts "it can seat up to ""#{team.capacity.blue}" " people."
+                puts "\n"
+                homes = team.stadium_name
+                homes.to_s
+                Scraper.comments.select do |team| if team[0].include?("#{homes}")
+                    print "In other words: ".light_black
+                    puts team[1]
+                    puts "\n"
+                    sleep(2)
+                    puts "Enter 'home' to go back."
+                    home_bound = gets.chomp
+                        if home_bound == "home"
+                            reFresh
+
+                        end
+                    end
+                end
+            break
+        else
+            x += 5
+            y+= 5
+        end
     end
     puts "Enter 'home' to go back."
     home_bound = gets.chomp
@@ -177,38 +166,15 @@ def year_opened_newest
         end
 end
 
-def capacity_SmallToBig
+def capacity
+    puts "Enter '1' for stadiums biggest to smallest stadiums, or '2' for smaller stadiums first."
+    answer = gets.chomp
     print "\e[8;40;60t"
-    size = Scraper.all.sort_by{|obj| obj.capacity}
-    x = 0
-    y = 1
-    puts""
-    while x < size.length
-    size[x..x+4].each.with_index(y) do |name, i|
-        puts "#{i}: " "#{name.stadium_name} holds: " "#{name.capacity}     \r"
-        puts "\r"
-        end
-        print "#{x+5} out of " "#{size.length} ".red
-        sleep(2)
-        print"\r"
-        print "Press enter to continue. \r".light_blue
-        puts ""
-        response = gets.chomp
-        if response == "\r"
-        end
-        x+=5
-        y+=5
-    end
-    puts "Enter 'home' to go back."
-    home_bound = gets.chomp
-        if home_bound == "home"
-            reFresh
-        end
-end
-
-def capacity_BigToSmall
-    print "\e[8;40;60t"
+    if answer == "1"
     size = Scraper.all.sort_by{|obj| obj.capacity}.reverse
+    elsif answer == "2"
+    size = Scraper.all.sort_by{|obj| obj.capacity}
+    end
     x = 0
     y = 1
     puts""
@@ -220,71 +186,45 @@ def capacity_BigToSmall
         print "#{x+5} out of " "#{size.length}".red
         sleep(2)
         print "\r"
-        print "Press enter to continue. \r".light_blue
+        print "Choose a stadium by number, or press enter to continue. \r".light_blue
         puts ""
         response = gets.chomp
-        if response == "\n"
+        response = response.to_i
+        if response != 0 && response != nil
+            team = size[response-1]
+            # binding.pry
+                puts team.stadium_name.yellow
+                puts "was opened in " "#{team.year_opened}" " in ""#{team.location}"" as"
+                puts "home to the ""#{team.teams.yellow}."
+                puts "The field's surface is ""#{team.surface}, and "
+                puts "it can seat up to ""#{team.capacity.blue}" " people."
+                puts "\n"
+                homes = team.stadium_name
+                homes.to_s
+                Scraper.comments.select do |team| if team[0].include?("#{homes}")
+                    print "In other words: ".light_black
+                    puts team[1]
+                    puts "\n"
+                    sleep(2)
+                    puts "Enter 'home' to go back."
+                    home_bound = gets.chomp
+                        if home_bound == "home"
+                            reFresh
+
+                        end
+                    end
+                end
+            break
+        else
+            x += 5
+            y+= 5
         end
-        x+=5
-        y+=5
     end
     puts "Enter 'home' to go back."
     home_bound = gets.chomp
         if home_bound == "home"
             reFresh
         end
-end
-
-def stadium_info
-    puts "Enter a stadium name.".light_red
-    stadium = gets.chomp.downcase
-    home_team = []
-    puts "\n\n"
-    print "\e[8;40;60t"
-    Scraper.all.select do |team| if team.stadium_name.downcase.include?("#{stadium}")
-        puts team.stadium_name.yellow
-        puts "was opened in " "#{team.year_opened}" " in ""#{team.location}"" as"
-        puts "home to the ""#{team.teams.yellow}."
-        puts "The field's surface is ""#{team.surface}, and "
-        puts "it can seat up to ""#{team.capacity.blue}" " people."
-        puts "\n"
-        homes = team.stadium_name
-        homes.to_s
-        Scraper.comments.select do |team| if team[0].include?("#{homes}")
-            print "In other words: ".light_black
-            puts team[1]
-            puts "\n"
-            end
-        end
-    end
-    end
-    puts"\n\n"
-    2.times do
-    print "                   "
-    sleep(1)
-    print " #{'FOOTBALL'.blue.on_red.blink}                  \r"
-    sleep(1)
-    print "                   "
-    sleep(1)
-    print "   #{'CENTRAL'.blue.on_red.uncolorize}                \r"
-    sleep(1)
-    print "                   "
-    sleep(1)
-    print "   #{'FOOTBALL'.blue.on_red.uncolorize}                  \r"
-    sleep(1)
-    print "                   "
-    sleep(1)
-    print "       #{'CENTRAL'.blue.on_red.blink}                     \r"
-    sleep(1)
-    end
-    print "                                                              "
-    sleep(1)
-    home_team = []
-    puts "Enter 'home' to go back."
-    home_bound = gets.chomp
-    if home_bound == "home"
-        reFresh
-    end
 end
 
 def zip_code
@@ -321,7 +261,7 @@ def zip_code
         end
     end
     end
-    puts "Enter 'home' to go back."
+    puts "Enter 'home'."
     home_bound = gets.chomp
     if home_bound == "home"
         reFresh
@@ -331,23 +271,9 @@ end
 if response == "list"
     list
 elsif response == "size"
-    puts " enter '1' for stadiums biggest to smallest stadiums, or '2' for smaller stadiums first."
-    answer = gets.chomp
-    if answer == "1"
-        capacity_BigToSmall
-    elsif answer == "2"
-        capacity_SmallToBig
-    end
+        capacity
 elsif response =="year"
-    puts " enter '1' for newest stadiums first, or '2' to start with the oldest stadiums."
-    answer = gets.chomp
-    if answer == "1"
-        year_opened_newest
-    elsif answer == "2"
-        year_opened_oldest
-    end
-elsif response == "stadium"
-    stadium_info
+        year_opened
 elsif response == "zip"
     zip_code
 else
