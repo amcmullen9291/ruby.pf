@@ -124,8 +124,6 @@ def year_opened
         print "#{x+5} out of " "#{years.length}".red
         sleep(2)
         print "\r"
-        x+=5
-        y+=5
         puts "Choose a stadium by number, or press enter to continue. \r".light_blue
         response = gets.chomp
         response = response.to_i
@@ -156,7 +154,7 @@ def year_opened
             break
         else
             x += 5
-            y+= 5
+            y += 5
         end
     end
     puts "Enter 'home' to go back."
