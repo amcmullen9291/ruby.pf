@@ -66,7 +66,7 @@ def reFresh
             response = gets.chomp
             if response == "\n"
             end
-            x += 15
+            x += 16
             y += 16
             # print "                                                "
         end
