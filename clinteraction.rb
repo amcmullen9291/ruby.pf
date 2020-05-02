@@ -67,7 +67,7 @@ def reFresh
             if response == "\n"
             end
             x += 15
-            y += 15
+            y += 16
             # print "                                                "
         end
         puts ""
