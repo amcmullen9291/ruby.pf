@@ -46,8 +46,10 @@ class Clinteraction
                 puts "#{i}: " "#{name.stadium_name}"
                 puts ""
                 end
-                print "#{x+15} out of " "#{Stadium.all.length} stadiums. \r".red
-                sleep(2)
+                if (x+16) < Stadium.all.length
+                    print "#{x+16} out of " "#{Stadium.all.length} stadiums. \r".red
+                    sleep(2)
+                end
                 print "Press enter to continue. \r".light_blue
                 response = gets.chomp
                 if response == "\n"
@@ -57,12 +59,8 @@ class Clinteraction
                 # print "                                                "
             end
             puts ""
-            puts "Enter 'home'."
-        home_bound = gets.chomp
-            if home_bound == "home"
-                reFresh
-            end
-    end
+            hook
+        end
 
     def teams
         print "\e[8;40;60t"
@@ -128,13 +126,8 @@ class Clinteraction
                         puts team[1]
                         puts "\n"
                         sleep(2)
-                        puts "Enter 'home' to go back."
-                        home_bound = gets.chomp
-                            if home_bound == "home"
-                                reFresh
-
-                            end
-                        end
+                        hook
+                    end
                     end
                 break
             else
@@ -142,11 +135,7 @@ class Clinteraction
                 y += 5
             end
         end
-        puts "Enter 'home' to go back."
-        home_bound = gets.chomp
-            if home_bound == "home"
-                reFresh
-            end
+    hook
     end
 
     def capacity
@@ -188,13 +177,8 @@ class Clinteraction
                         puts team[1]
                         puts "\n"
                         sleep(2)
-                        puts "Enter 'home' to go back."
-                        home_bound = gets.chomp
-                            if home_bound == "home"
-                                reFresh
-
-                            end
-                        end
+                        hook
+                    end
                     end
                 break
             else
@@ -202,11 +186,7 @@ class Clinteraction
                 y+= 5
             end
         end
-        puts "Enter 'home' to go back."
-        home_bound = gets.chomp
-            if home_bound == "home"
-                reFresh
-            end
+    hook
     end
 
     def zip_code
@@ -244,11 +224,15 @@ class Clinteraction
             end
         end
         end
-        puts "Enter 'home'."
+    hook
+    end
+
+    def hook
+        puts "Enter 'home' to go back."
         home_bound = gets.chomp
-        if home_bound == "home"
-            reFresh
-        end
+            if home_bound == "home"
+                reFresh
+            end
     end
 
 end
