@@ -15,4 +15,4 @@ End license text.
 License on file at: https://github.com/amcmullen9291/ruby.pf/blob/master/LICENSE
 
 Gems used: Nokogiri, Open-Uri, and Colorize 
-(launch program from clinteraction.rb).
+(launch program from stadiums.rb).
